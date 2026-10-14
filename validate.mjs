@@ -18,7 +18,7 @@
 // genuinely conserved and water is the only thing moving.
 // ---------------------------------------------------------------------------
 
-import { readFileSync, existsSync } from 'node:fs'
+import { readFileSync, existsSync, readdirSync } from 'node:fs'
 
 const VOCAB = JSON.parse(readFileSync(new URL('./vocabulary.json', import.meta.url), 'utf8'))
 const ZAYTOUN = process.env.ZAYTOUN ?? '../zaytoun'
@@ -55,6 +55,27 @@ function masroufiSlugs() {
   return new Set([...src.matchAll(/^\s+\("([a-z_]+)"/gm)].map((m) => m[1]))
 }
 
+// The researched catalogue: data/raw/*_items.csv, seeded alongside the
+// hand-written one. Slugs are the first column; RAW_SLUG_ALIASES in
+// catalogue.py folds a few of them into hand-written items.
+function masroufiResearched() {
+  const dir = `${MASROUFI}/data/raw`
+  if (!existsSync(dir)) return new Set()
+  const aliases = new Map()
+  const cat = readFileSync(`${MASROUFI}/app/kitchen/catalogue.py`, 'utf8')
+  const block = cat.match(/RAW_SLUG_ALIASES[^{]*\{([^}]*)\}/)
+  if (block) for (const m of block[1].matchAll(/"([a-z_]+)":\s*"([a-z_]+)"/g)) aliases.set(m[1], m[2])
+  const out = new Set()
+  for (const f of readdirSync(dir).filter((f) => f.endsWith('_items.csv'))) {
+    const lines = readFileSync(`${dir}/${f}`, 'utf8').split(/\r?\n/).slice(1)
+    for (const line of lines) {
+      const slug = line.split(',')[0]
+      if (slug) out.add(aliases.get(slug) ?? slug)
+    }
+  }
+  return out
+}
+
 function masroufiDishes() {
   const p = `${MASROUFI}/app/kitchen/dishes.py`
   if (!existsSync(p)) return null
@@ -65,10 +86,12 @@ function masroufiDishes() {
 const foods = zaytounFoods()
 const mItems = masroufiSlugs()
 const mDishes = masroufiDishes()
+const mResearched = mItems ? masroufiResearched() : new Set()
 
 console.log(`vocabulary ${VOCAB.version} — ${VOCAB.items.length} items, ${VOCAB.dishes.length} dishes`)
 console.log(`zaytoun:  ${foods ? foods.size + ' foods' : 'NOT FOUND at ' + ZAYTOUN}`)
-console.log(`masroufi: ${mItems ? mItems.size + ' items, ' + mDishes.size + ' dishes' : 'NOT FOUND at ' + MASROUFI}`)
+console.log(`masroufi: ${mItems ? mItems.size + ' items, ' + mDishes.size + ' dishes' : 'NOT FOUND at ' + MASROUFI}` +
+  (mResearched.size ? `, plus ${[...mResearched].filter((s) => !mItems.has(s)).length} researched items in data/raw` : ''))
 
 // --- 1. coverage ------------------------------------------------------------
 
@@ -76,13 +99,20 @@ console.log('\ncoverage')
 const vSlugs = new Set(VOCAB.items.map((i) => i.slug))
 if (mItems) {
   for (const s of mItems) if (!vSlugs.has(s)) problem(`Masroufi item "${s}" has no entry in the vocabulary`)
-  for (const s of vSlugs) if (!mItems.has(s)) problem(`vocabulary item "${s}" is not in Masroufi's catalogue`)
+  for (const s of vSlugs) if (!mItems.has(s) && !mResearched.has(s)) problem(`vocabulary item "${s}" is not in Masroufi's catalogue`)
+  // The hand-written catalogue must be covered in full. The researched one is
+  // being worked through: its gap is reported, not failed, so CI stays a signal
+  // about regressions rather than about a backlog everyone already knows of.
+  const backlog = [...mResearched].filter((s) => !mItems.has(s) && !vSlugs.has(s))
+  if (backlog.length) {
+    caution(`${backlog.length} researched Masroufi items have no vocabulary entry yet (e.g. ${backlog.slice(0, 5).join(', ')})`)
+  }
 }
 if (mDishes) {
   const vDishes = new Set(VOCAB.dishes.map((d) => d.masroufi))
   for (const s of mDishes) if (!vDishes.has(s)) problem(`Masroufi dish "${s}" has no alias entry`)
 }
-if (!fail) console.log('  ok')
+if (!fail) console.log('  ok' + (warn ? ' for the hand-written catalogue' : ''))
 
 // --- 2. references ----------------------------------------------------------
 
