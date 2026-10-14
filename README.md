@@ -125,13 +125,32 @@ potato. The slug is wrong and should be renamed before anything joins on it.
 
 ## Adding an item
 
-1. Add it to Masroufi's `CATALOGUE` first — Masroufi owns item slugs.
+1. Add it to Masroufi first — Masroufi owns item slugs. That is either the
+   hand-written `CATALOGUE` in `app/kitchen/catalogue.py` or a row in one of the
+   researched `data/raw/*_items.csv` files.
 2. Add an entry here with `state`, `edible_fraction`, `cooked_yield` and a
    waste-discounted panel.
 3. If Zaytoun has an as-eaten counterpart, set `zaytoun_food_id` and pick a
    `check` you can defend. If it doesn't, leave it `null` and say so in `note`.
 4. Run `validate.mjs`. If a `strict` check fails, the yield factor is wrong —
    fix the factor, don't downgrade the check.
+
+### Panels: where the numbers come from
+
+Zaytoun's single-ingredient foods track USDA FoodData Central and the FAO/WHO
+West Asia tables, so this file does too. Where Zaytoun has the same food, an
+entry's panel is Zaytoun's scaled by the edible or drained fraction, and the
+invariant then holds by construction — its job is to catch a later edit to
+either side, not to prove the first number. Where it does not, the `note` names
+the USDA entry. The one exception is `sumac`, which no table lists: its panel is
+a labelled placeholder.
+
+### The researched catalogue is the backlog
+
+Masroufi now seeds 321 more items from `data/raw/`. None has an entry here yet.
+`validate.mjs` reports that as one warning rather than 321 failures, so CI stays
+a signal about regressions; the hand-written catalogue must still be covered in
+full. Work through it group by group, staples first.
 
 ### Known gaps worth filling
 
