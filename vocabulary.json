@@ -1,7 +1,7 @@
 {
   "$schema": "./schema.md",
-  "version": "1.1.0",
-  "generated": "2026-10-14",
+  "version": "1.0.0",
+  "generated": "2026-09-23",
   "owns": "The join between Masroufi item slugs and Zaytoun nutrition ids, plus the yield factors needed to convert a purchase weight into an eaten weight. It deliberately does NOT duplicate names, units, purchase steps or shelf lives (Masroufi owns those) or as-eaten nutrient panels (Zaytoun owns those).",
   "conventions": {
     "per_100g_as_purchased": "Nutrients actually delivered by 100 g of the thing you BUY, with inedible waste already discounted. Bone, shell, peel and stalk are removed here, not later, so that cost-per-nutrient divides correctly against a per-kilo price.",
@@ -775,36 +775,36 @@
     {
       "slug": "canned_tuna",
       "state": "as_sold",
-      "edible_fraction": 0.7,
+      "edible_fraction": 0.75,
       "cooked_yield": 1,
       "per_100g_as_purchased": {
-        "kcal": 130,
-        "protein": 18.5,
-        "carbs": 0.0,
-        "fat": 5.7,
-        "fiber": 0.0,
-        "sodium": 247.8
+        "kcal": 148.5,
+        "protein": 21.8,
+        "carbs": 0,
+        "fat": 6.2,
+        "fiber": 0,
+        "sodium": 266
       },
       "zaytoun_food_id": "tuna-canned",
-      "check": "strict",
-      "note": "Per 100 g of tin contents, oil included in the weight but not the panel: about 70% is fish once drained, which is what Zaytoun logs. The oil is often eaten with bread anyway; if it is, it belongs to this item and adds roughly 80 kcal per 100 g bought."
+      "check": "loose",
+      "note": "Masroufi weighs the whole tin; about a quarter is oil and brine that gets drained. Zaytoun's panel is drained. Loose because how much oil is drained varies."
     },
     {
       "slug": "canned_sardines",
       "state": "as_sold",
-      "edible_fraction": 0.72,
+      "edible_fraction": 0.85,
       "cooked_yield": 1,
       "per_100g_as_purchased": {
-        "kcal": 150,
-        "protein": 17.7,
-        "carbs": 0.0,
-        "fat": 8.2,
-        "fiber": 0.0,
-        "sodium": 363.6
+        "kcal": 177,
+        "protein": 20.9,
+        "carbs": 0,
+        "fat": 9.8,
+        "fiber": 0,
+        "sodium": 261
       },
       "zaytoun_food_id": "sardines",
-      "check": "strict",
-      "note": "A 125 g tin drains to about 90 g, which is Zaytoun's 'tin' portion. Bones are soft and eaten, which makes tinned sardines one of the cheapest sources of calcium in a parcel."
+      "check": "loose",
+      "note": "Tin weight includes oil, mostly drained. Bones are soft and eaten, which makes this one of the best calcium sources in the catalogue."
     },
     {
       "slug": "canned_meat",
@@ -812,16 +812,16 @@
       "edible_fraction": 1,
       "cooked_yield": 1,
       "per_100g_as_purchased": {
-        "kcal": 296,
-        "protein": 12.6,
-        "carbs": 4.6,
-        "fat": 25.4,
+        "kcal": 250,
+        "protein": 27.1,
+        "carbs": 0,
+        "fat": 14.9,
         "fiber": 0,
-        "sodium": 1100
+        "sodium": 897
       },
-      "zaytoun_food_id": "meat-canned",
-      "check": "strict",
-      "note": "Luncheon meat, which is what Zaytoun means. Corned beef is sold under the same Arabic name and is a different food: roughly twice the protein (about 27 g) and less fat. A household whose tins are corned beef is understated here."
+      "zaytoun_food_id": null,
+      "check": "none",
+      "note": "Corned-beef style. Zaytoun's beef-mince is home-cooked fresh mince with a different fat and salt profile, so no join. Very high sodium."
     },
     {
       "slug": "canned_fava",
@@ -836,9 +836,9 @@
         "fiber": 3.7,
         "sodium": 453
       },
-      "zaytoun_food_id": "foul",
+      "zaytoun_food_id": null,
       "check": "none",
-      "note": "USDA: broadbeans, mature seeds, canned, solids and liquid; the liquid usually goes into the foul. Zaytoun's 'foul' is the dressed dish with oil and lemon, the same mismatch as fava_beans, so no invariant holds."
+      "note": "Whole tin including liquid, which goes into foul. Not joined to Zaytoun's foul for the same reason as fava_beans: that panel is the dressed dish with oil and lemon."
     },
     {
       "slug": "canned_chickpeas",
@@ -846,16 +846,16 @@
       "edible_fraction": 0.6,
       "cooked_yield": 1,
       "per_100g_as_purchased": {
-        "kcal": 98,
-        "protein": 5.3,
-        "carbs": 16.4,
+        "kcal": 83,
+        "protein": 4.2,
+        "carbs": 13.5,
         "fat": 1.6,
-        "fiber": 4.6,
+        "fiber": 3.8,
         "sodium": 144
       },
       "zaytoun_food_id": "chickpeas",
-      "check": "strict",
-      "note": "A 400 g tin drains to about 240 g, Zaytoun's 'tin' portion. Panel is Zaytoun's cooked chickpeas scaled by that fraction. Sodium is set for salted tins, about 240 mg per 100 g drained; home-boiled has almost none. Tinned are often a little wetter than home-boiled, so energy may run up to 10% lower."
+      "check": "loose",
+      "note": "About 60% of tin weight is drained chickpeas (Zaytoun's own 'tin' portion is 240 g of a 400 g tin). Loose, not strict: tinned chickpeas hold more water than home-cooked, so energy runs ~15% under Zaytoun's panel."
     },
     {
       "slug": "canned_white_beans",
@@ -863,16 +863,16 @@
       "edible_fraction": 0.6,
       "cooked_yield": 1,
       "per_100g_as_purchased": {
-        "kcal": 83,
-        "protein": 5.8,
-        "carbs": 15.0,
+        "kcal": 68.4,
+        "protein": 4.4,
+        "carbs": 12.6,
         "fat": 0.2,
-        "fiber": 3.8,
-        "sodium": 144
+        "fiber": 2.9,
+        "sodium": 180
       },
-      "zaytoun_food_id": "white-beans",
-      "check": "strict",
-      "note": "Same shape as canned_chickpeas: about 60% of the tin is beans once drained, and the salt is the tin's, not the bean's."
+      "zaytoun_food_id": null,
+      "check": "none",
+      "note": "Tinned beans are wetter than Zaytoun's home-cooked white-beans and fail even the loose protein check (~25% off), so left unjoined rather than widening the tolerance."
     },
     {
       "slug": "canned_tomato",
@@ -880,16 +880,16 @@
       "edible_fraction": 1,
       "cooked_yield": 1,
       "per_100g_as_purchased": {
-        "kcal": 17,
+        "kcal": 18,
         "protein": 0.8,
-        "carbs": 3.5,
-        "fat": 0.2,
-        "fiber": 1.0,
-        "sodium": 140
+        "carbs": 4,
+        "fat": 0.1,
+        "fiber": 1,
+        "sodium": 115
       },
       "zaytoun_food_id": "tomato",
-      "check": "loose",
-      "note": "Packed in juice, solids and juice together. Close to fresh tomato per gram except for added salt, so only protein is checked against Zaytoun's fresh tomato."
+      "check": "strict",
+      "note": "Juice is used in cooking, so the whole tin counts. Energy matches fresh tomato; sodium is higher from added salt."
     },
     {
       "slug": "milk_powder",
@@ -906,7 +906,7 @@
       },
       "zaytoun_food_id": "milk-powder",
       "check": "strict",
-      "note": "Whole milk powder, which both apps mean. Made up, 100 g is about 750 ml of milk. Skimmed powder in some parcels is about 360 kcal with no fat and more protein."
+      "note": "Whole milk powder. Both sides describe the dry powder; about 30 g makes a 240 ml cup."
     },
     {
       "slug": "halawa",
@@ -914,16 +914,16 @@
       "edible_fraction": 1,
       "cooked_yield": 1,
       "per_100g_as_purchased": {
-        "kcal": 516,
-        "protein": 12.5,
-        "carbs": 51,
-        "fat": 30,
-        "fiber": 4.8,
-        "sodium": 195
+        "kcal": 500,
+        "protein": 12,
+        "carbs": 55,
+        "fat": 29,
+        "fiber": 4,
+        "sodium": 190
       },
       "zaytoun_food_id": "halva",
       "check": "strict",
-      "note": "Tahini halva. Among the most energy-dense things in an aid parcel per shekel, which is why it is in one."
+      "note": "Values vary by brand with the tahini-to-sugar ratio."
     },
     {
       "slug": "dates",
@@ -935,12 +935,12 @@
         "protein": 1.6,
         "carbs": 67.5,
         "fat": 0.2,
-        "fiber": 6.0,
-        "sodium": 0.9
+        "fiber": 6,
+        "sodium": 1
       },
       "zaytoun_food_id": "dates",
       "check": "strict",
-      "note": "Sold with the stone, which is about a tenth of the weight. Pitted dates and date paste (agwa) are edible_fraction 1."
+      "note": "Sold with pits, about 10% of weight."
     },
     {
       "slug": "sumac",
@@ -948,16 +948,16 @@
       "edible_fraction": 1,
       "cooked_yield": 1,
       "per_100g_as_purchased": {
-        "kcal": 250,
+        "kcal": 300,
         "protein": 4,
-        "carbs": 60,
-        "fat": 7,
-        "fiber": 30,
-        "sodium": 10
+        "carbs": 72,
+        "fat": 13,
+        "fiber": 36,
+        "sodium": 20
       },
       "zaytoun_food_id": null,
       "check": "none",
-      "note": "Placeholder. Neither USDA nor the FAO/WHO West Asia tables list sumac, and published analyses of Rhus coriaria disagree widely, especially on fat. At a few grams a dish the error cannot move a meal's total, but do not quote this panel."
+      "note": "Approximate: published panels for ground sumac vary widely. Used in grams per dish, so the error barely matters for nutrition."
     },
     {
       "slug": "chard",
@@ -967,33 +967,33 @@
       "edible_fraction": 0.85,
       "cooked_yield": 1,
       "per_100g_as_purchased": {
-        "kcal": 16,
-        "protein": 1.5,
-        "carbs": 3.1,
-        "fat": 0.2,
-        "fiber": 1.4,
-        "sodium": 181.0
+        "kcal": 16.2,
+        "protein": 1.53,
+        "carbs": 3.15,
+        "fat": 0.17,
+        "fiber": 1.36,
+        "sodium": 181
       },
       "zaytoun_food_id": "chard",
       "check": "strict",
-      "note": "A bunch is about 200 g, Zaytoun's 'bunch'. Only the root ends are discarded: in sumagiyya the stalks are chopped and cooked with the leaves. Cooked yield 1 for the same reason as spinach."
+      "note": "Sold by the bunch, ~200 g. Stems are eaten in sumagiyya and most local dishes; only the base is trimmed. Yield 1.0 for the same reason as spinach."
     },
     {
       "slug": "maftoul",
       "state": "dry",
       "edible_fraction": 1,
-      "cooked_yield": 2.4,
+      "cooked_yield": 2.3,
       "per_100g_as_purchased": {
-        "kcal": 376,
-        "protein": 12.8,
-        "carbs": 77.4,
-        "fat": 0.6,
-        "fiber": 5,
+        "kcal": 370,
+        "protein": 12.5,
+        "carbs": 75,
+        "fat": 1.5,
+        "fiber": 4,
         "sodium": 10
       },
       "zaytoun_food_id": "maftoul",
       "check": "strict",
-      "note": "Dry maftoul, close to couscous in composition (USDA: couscous, dry), roughly 2.4x by weight once steamed. Zaytoun's maftoul is the finished grain with a little oil and salt, which is why the fat and sodium differ while energy agrees."
+      "note": "Dry hand-rolled wheat. Zaytoun's cooked panel includes some oil and salt, so fat and sodium differ even though energy agrees."
     },
     {
       "slug": "yeast",
@@ -1010,7 +1010,7 @@
       },
       "zaytoun_food_id": null,
       "check": "none",
-      "note": "USDA: active dry baker's yeast. About 7 g per kilo of flour, so its energy is a rounding error in bread, but it is a real source of B vitamins in a diet of parcel flour."
+      "note": "Active dry yeast. Used in grams per loaf; nutritionally negligible, present so bread baked from parcel flour can be costed."
     }
   ],
   "dishes": [

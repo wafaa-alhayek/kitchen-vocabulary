@@ -138,12 +138,11 @@ potato. The slug is wrong and should be renamed before anything joins on it.
 ### Panels: where the numbers come from
 
 Zaytoun's single-ingredient foods track USDA FoodData Central and the FAO/WHO
-West Asia tables, so this file does too. Where Zaytoun has the same food, an
-entry's panel is Zaytoun's scaled by the edible or drained fraction, and the
-invariant then holds by construction — its job is to catch a later edit to
-either side, not to prove the first number. Where it does not, the `note` names
-the USDA entry. The one exception is `sumac`, which no table lists: its panel is
-a labelled placeholder.
+West Asia tables, so the panels here do too. Where an entry is derived from
+Zaytoun's own panel, scaled by the edible or drained fraction, the invariant
+holds by construction: its job there is to catch a later edit to either side,
+not to prove the first number. Sumac is in no table, so its panel is an
+estimate and says so.
 
 ### The researched catalogue is the backlog
 
