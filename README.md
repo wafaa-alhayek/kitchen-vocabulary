@@ -118,8 +118,8 @@ A one-directional bias across every dish is not two datasets disagreeing at
 random. `dishes.py` predicts it in its own docstring: the quantities were "set
 by a developer, not a cook", and an overstated one "becomes money wasted".
 
-Also: `bamia_vegetarian` contains no okra. It's lentils, rice, carrot and
-potato. The slug is wrong and should be renamed before anything joins on it.
+Also: Masroufi's `bamia_vegetarian` contained no okra. It was lentils, rice,
+carrot and potato, and has since been renamed `lentil_vegetable_stew`.
 
 ---
 
