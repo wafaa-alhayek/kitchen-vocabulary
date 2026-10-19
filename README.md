@@ -161,3 +161,7 @@ this catalogue that currently has no nutrition entry at all.
 
 Nothing here gels in water. Chia, basil seed (حب الريحان) and psyllium
 (قاطونة) are all absent, and are the cheapest satiety per calorie available.
+
+## License
+
+MIT. See [LICENSE](LICENSE).

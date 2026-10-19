@@ -2,6 +2,7 @@
   "name": "kitchen-vocabulary",
   "version": "1.0.0",
   "private": true,
+  "license": "MIT",
   "description": "Shared item vocabulary joining Masroufi (cost) and Zaytoun (nutrition). A file, not a service.",
   "type": "module",
   "scripts": {
