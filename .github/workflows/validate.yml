@@ -1,0 +1,36 @@
+# Checks the vocabulary against both apps. Runs weekly too, because either app
+# can drift away from this file without touching this repo.
+#
+# Zaytoun is private: CROSS_REPO_TOKEN must be a fine-grained token with
+# read-only "Contents" access to wafaa-alhayek/Zaytoun.
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: wafaa-alhayek/masroufi
+          path: masroufi
+      - uses: actions/checkout@v4
+        with:
+          repository: wafaa-alhayek/Zaytoun
+          path: zaytoun
+          token: ${{ secrets.CROSS_REPO_TOKEN }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node validate.mjs
+        env:
+          MASROUFI: masroufi
+          ZAYTOUN: zaytoun
